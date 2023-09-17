@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Travel Destination</title>
+</head>
+<body>
+    <h1>Create New Travel Destination</h1>
+    <form id="createForm">
+        <label for="country">Country:</label>
+        <input type="text" id="country" required><br><br>
+
+        <label for="link">Link:</label>
+        <input type="url" id="link" required><br><br>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" required></textarea><br><br>
+
+        <label for="arrivalDate">Arrival Date:</label>
+        <input type="date" id="arrivalDate" required><br><br>
+
+        <label for="departureDate">Departure Date:</label>
+        <input type="date" id="departureDate" required><br><br>
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" accept="image/*" required><br><br>
+
+        <button type="button" id="submitBtn">Submit</button>
+    </form>
+
+    <script>
+        const createForm = document.getElementById('createForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Sample destinations data
+        const destinations = [];
+
+        submitBtn.addEventListener('click', function () {
+            // Get form values
+            const country = document.getElementById('country').value;
+            const link = document.getElementById('link').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const arrivalDate = document.getElementById('arrivalDate').value;
+            const departureDate = document.getElementById('departureDate').value;
+            const image = document.getElementById('image').files[0]; // Assuming a single image file
+
+            // Create a destination object
+            const destination = {
+                country,
+                link,
+                title,
+                description,
+                arrivalDate,
+                departureDate,
+                image
+            };
+
+            destinations.push(destination);
+
+            window.location.replace("./index.html");
+        });
+    </script>
+</body>
+</html>
