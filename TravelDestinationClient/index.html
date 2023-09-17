@@ -93,29 +93,34 @@
 
         (async () => {
             try {
-                const image1 = await imageUrlToBlob('https://upload.wikimedia.org/wikipedia/commons/4/48/Catsrepublic.jpg');
+                // const image1 = await imageUrlToBlob('https://upload.wikimedia.org/wikipedia/commons/4/48/Catsrepublic.jpg');
+                // get destinations from API
 
-                const destinations = [
-                    {
-                        country: 'Catland',
-                        link: 'https://www.facebook.com/',
-                        title: 'Destination 1',
-                        description: 'Description 1',
-                        arrivalDate: '2023-09-16',
-                        departureDate: '2023-09-16',
-                        image: image1
-                    },
-                    {
-                        country: 'Catland',
-                        link: 'https://www.facebook.com/',
-                        title: 'Destination 1',
-                        description: 'Description 1',
-                        arrivalDate: '2023-09-16',
-                        departureDate: '2023-09-16',
-                        image: image1
-                    }
-                    // Add more destinations here
-                ];
+                const response = await fetch('http://localhost:3000/destinations');
+                const destinations = await response.json();
+                console.log(destinations);
+
+                // const destinations = [
+                //     {
+                //         country: 'Catland',
+                //         link: 'https://www.facebook.com/',
+                //         title: 'Destination 1',
+                //         description: 'Description 1',
+                //         arrivalDate: '2023-09-16',
+                //         departureDate: '2023-09-16',
+                //         image: image1
+                //     },
+                //     {
+                //         country: 'Catland',
+                //         link: 'https://www.facebook.com/',
+                //         title: 'Destination 1',
+                //         description: 'Description 1',
+                //         arrivalDate: '2023-09-16',
+                //         departureDate: '2023-09-16',
+                //         image: image1
+                //     }
+                //     // Add more destinations here
+                // ];
 
                 const destinationList = document.getElementById('destinationList');
 
@@ -126,12 +131,12 @@
                         const card = document.createElement('div');
                         card.classList.add('destination-card');
 
-                        const imageContainer = document.createElement('div');
-                        imageContainer.classList.add('destination-image');
-                        const image = document.createElement('img');
-                        image.src = URL.createObjectURL(destination.image);
-                        image.alt = destination.title;
-                        imageContainer.appendChild(image);
+                        // const imageContainer = document.createElement('div');
+                        // imageContainer.classList.add('destination-image');
+                        // const image = document.createElement('img');
+                        // image.src = URL.createObjectURL(destination.image);
+                        // image.alt = destination.title;
+                        // imageContainer.appendChild(image);
 
                         const detailsContainer = document.createElement('div');
                         detailsContainer.classList.add('destination-details');
@@ -157,7 +162,7 @@
                         detailsContainer.appendChild(description);
                         detailsContainer.appendChild(link);
 
-                        card.appendChild(imageContainer);
+                        // card.appendChild(imageContainer);
                         card.appendChild(detailsContainer);
 
                         destinationList.appendChild(card);
