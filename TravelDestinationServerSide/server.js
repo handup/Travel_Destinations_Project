@@ -1,11 +1,19 @@
 const express = require('express');
 const app = express();
+const cors = require('cors'); // Import the 'cors' package
 
 const port = 3000;
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });
+
+  app.use(cors({
+    origin: '*', // Replace '*' with the actual origin(s) in a production environment
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  }));
+
 
 // GET localhost:40000/destinations => return all destinations
 app.get('/destinations', (req, res) => {    
