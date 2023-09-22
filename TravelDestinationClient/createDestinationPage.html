@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Travel Destination</title>
 </head>
+
 <body>
     <h1>Create New Travel Destination</h1>
     <form id="createForm">
@@ -39,7 +41,7 @@
         // Sample destinations data
         const destinations = [];
 
-        submitBtn.addEventListener('click', function () {
+        submitBtn.addEventListener('click', async () => {
             // Get form values
             const country = document.getElementById('country').value;
             const link = document.getElementById('link').value;
@@ -60,10 +62,17 @@
                 image
             };
 
-            destinations.push(destination);
+            const response = await fetch('http://localhost:3000/destinations', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                }, body: JSON.stringify(destination)
+            });
+            console.log(response.json())
 
             // window.location.replace("./index.html");
         });
     </script>
 </body>
+
 </html>
