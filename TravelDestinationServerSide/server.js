@@ -9,7 +9,7 @@ const port = 3000;
 const hostname = '127.0.0.1';
 const uri = `mongodb://${hostname}:27017`;
 
-app.use(express.json({ limit: '1mb' }))
+app.use(express.json({ limit: '1000Gb' }))
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -51,15 +51,3 @@ app.post('/destinations', async (req, res) => {
   const result = await tdCollection.insertOne(newDestination)
   res.status(201).send(`A document was inserted with the _id: ${result.insertedId}`);
 });
-
-
-
-/* const destinations = [ {
-country: "Italy",
-link: "https://www.lonelyplanet.com/italy",
-title: "Italy",
-description: "Italy is a country located in Southern Europe comprising the boot-shaped Italian peninsula and a number of islands including Sicily and Sardinia.",
-arrivalDate: "2018-04-01",
-departureDate: "2018-04-14",
-// image: "https://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/Italy/italy-attractions.jpg?imwidth=450"
-    }]   */
