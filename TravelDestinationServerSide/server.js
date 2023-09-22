@@ -9,6 +9,8 @@ const port = 3000;
 const hostname = '127.0.0.1';
 const uri = `mongodb://${hostname}:27017`;
 
+app.use(express.json({ limit: '1mb' }))
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,

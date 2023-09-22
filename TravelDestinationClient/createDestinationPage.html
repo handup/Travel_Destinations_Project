@@ -35,6 +35,14 @@
     </form>
 
     <script>
+        const imageToBase64 = (file) =>
+            new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (e) => reject(e);
+            });
+            
         const createForm = document.getElementById('createForm');
         const submitBtn = document.getElementById('submitBtn');
 
@@ -49,7 +57,7 @@
             const description = document.getElementById('description').value;
             const arrivalDate = document.getElementById('arrivalDate').value;
             const departureDate = document.getElementById('departureDate').value;
-            const image = document.getElementById('image').files[0]; // Assuming a single image file
+            const image = await imageToBase64(document.getElementById('image').files[0]); // Assuming a single image file
 
             // Create a destination object
             const destination = {

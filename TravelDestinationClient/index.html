@@ -72,29 +72,13 @@
     <a href="./createDestinationPage.html" class="create-button">Create New Destination</a>
 
     <script>
-        // JavaScript for displaying existing destinations with image blobs
-        // You can fetch data from your API or use sample data for this example
-        async function imageUrlToBlob(imageUrl) {
-            try {
-                const response = await fetch(imageUrl);
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return await response.blob();
-            } catch (error) {
-                console.error('Error converting image URL to Blob:', error);
-                return null;
-            }
-        }
-
-
-
         (async () => {
             try {
-                // const image1 = await imageUrlToBlob('https://upload.wikimedia.org/wikipedia/commons/4/48/Catsrepublic.jpg');
-                // get destinations from API
+                function base64ToImage(base64) {
+                    var image = new Image();
+                    image.src = base64;
+                    return image;
+                }
 
                 const response = await fetch('http://localhost:3000/destinations');
                 const destinations = await response.json();
@@ -109,12 +93,9 @@
                         const card = document.createElement('div');
                         card.classList.add('destination-card');
 
-                        // const imageContainer = document.createElement('div');
-                        // imageContainer.classList.add('destination-image');
-                        // const image = document.createElement('img');
-                        // image.src = URL.createObjectURL(destination.image);
-                        // image.alt = destination.title;
-                        // imageContainer.appendChild(image);
+                        const imageContainer = document.createElement('div');
+                        imageContainer.classList.add('destination-image');
+                        imageContainer.appendChild(base64ToImage(destination.image));
 
                         const detailsContainer = document.createElement('div');
                         detailsContainer.classList.add('destination-details');
