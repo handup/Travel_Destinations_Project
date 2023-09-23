@@ -7,9 +7,15 @@
     <title>Show Existing Travel Destinations</title>
     <link rel="stylesheet" href="styleIndex.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleCreateDestinationPage.css" />
 </head>
 
-<body>
+<body  id="createDestination">
+    <header>
+        <img src="Fill 214.svg" alt="world" />
+        <p>My travel journal.</p>
+      </header>
+  
     <h1>Destinations</h1>
     <ul id="destinationList">
         <!-- Existing destinations will be displayed here -->
@@ -58,13 +64,9 @@
                         country.classList.add('destination-country');
                         country.textContent = destination.country;
 
-                        // create a new div for country 
-                        // add the svg that you find in the folder img with the name Ping.svg
-
                         const countryContainer = document.createElement('div');
                         countryContainer.classList.add('country-container');
                        
-
                         const countryImage = document.createElement('img');
                         countryImage.src = './img/Ping.svg';
                         countryImage.classList.add('country-image');
@@ -80,6 +82,20 @@
                         link.classList.add('link');
                         link.target = '_blank';
 
+                        const arrivalDate = document.createElement('div');
+                        arrivalDate.classList.add('arrival-date');
+                        arrivalDate.textContent = destination.arrivalDate;
+
+                        const departureDate = document.createElement('div');
+                        departureDate.classList.add('departure-date');
+                        departureDate.textContent = destination.departureDate;
+
+                        const containerArrivalAndDeparture = document.createElement('div');
+                        containerArrivalAndDeparture.classList.add('container-arival-and-departure');
+                        containerArrivalAndDeparture.appendChild(arrivalDate);
+                        containerArrivalAndDeparture.appendChild(departureDate);
+
+
                         const linkContainer = document.createElement('div');
                         linkContainer.classList.add('link-container');
                         linkContainer.appendChild(link);
@@ -94,6 +110,7 @@
 
                         detailsContainer.appendChild(countryLink);
                         detailsContainer.appendChild(title);
+                        detailsContainer.appendChild(containerArrivalAndDeparture);
                         detailsContainer.appendChild(description);
 
                         card.appendChild(imageContainer);

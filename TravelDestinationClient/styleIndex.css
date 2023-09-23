@@ -20,7 +20,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 12px 40px;
+    font-size: 18px;
     background-color: #03A9F4;
     color: #fff;
     text-decoration: none;
@@ -39,7 +40,7 @@ h1 {
 }
 
 .destination-card {
-    width: 32%;
+    width: 30%;
     display: flex;
     border-bottom: 1px solid #FF8A50;
     margin: 10px;
@@ -66,14 +67,18 @@ h1 {
 }
 
 .destination-title {
+    width: 100%;
     font-size: clamp(0.75rem, 0.2438rem + 1.6197vw, 2.1875rem);
     font-weight: bold;
+    overflow-wrap: anywhere;
 }
 
 .destination-country {
-    font-size: 14px;
-    color: #777;
-    letter-spacing: 3px;
+    width: 91%;
+    font-size: 13.5px;
+    color: black;
+    letter-spacing: 2px;
+    overflow-wrap: anywhere;
 }
 
 .country-link{
@@ -98,3 +103,22 @@ h1 {
     justify-content: center;
 }
 
+.country-container {
+    width: 40%;
+    display: flex;
+}
+
+.country-container img {
+margin-right: 7px;
+}
+
+.container-arival-and-departure {
+    display: flex;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.arrival-date {
+    margin-right: 10px;
+    
+}

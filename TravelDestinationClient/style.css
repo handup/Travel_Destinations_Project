@@ -14,8 +14,12 @@ h1 {
 
 p {
     font-size: 12px;
+    overflow-wrap: anywhere;
+    margin-top: 0px;
 }
 
 h2 {
     margin-top: 0rem;
+    margin-bottom: 8px;
 }
+
