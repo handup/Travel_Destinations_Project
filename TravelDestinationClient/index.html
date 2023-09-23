@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>Existing Travel Destinations</h1>
+    <h1>Destinations</h1>
     <ul id="destinationList">
         <!-- Existing destinations will be displayed here -->
     </ul>
@@ -61,10 +61,22 @@
                         link.textContent = 'Link';
                         link.target = '_blank';
 
+                        //  add contry and the link in a div 
+
+                        const countryLink = document.createElement('div');
+                        countryLink.classList.add('country-link');
+                        countryLink.appendChild(country);
+                        countryLink.appendChild(link);
+
+
+                        // detailsContainer.appendChild(title);
+                        // detailsContainer.appendChild(country);
+                        // detailsContainer.appendChild(description);
+                        // detailsContainer.appendChild(link);
+
+                        detailsContainer.appendChild(countryLink);
                         detailsContainer.appendChild(title);
-                        detailsContainer.appendChild(country);
                         detailsContainer.appendChild(description);
-                        detailsContainer.appendChild(link);
 
                         card.appendChild(imageContainer);
                         card.appendChild(detailsContainer);
