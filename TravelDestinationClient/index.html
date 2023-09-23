@@ -14,7 +14,12 @@
     <ul id="destinationList">
         <!-- Existing destinations will be displayed here -->
     </ul>
-    <a href="./createDestinationPage.html" class="create-button">Create New Destination</a>
+    <div class="hero-button">
+        <a href="./createDestinationPage.html" class="create-button">
+            <img src="./img/Plus-Icon.png" alt="Plus Icon">
+            <span>Add entry</span>
+        </a>
+    </div>
 
     <script>
         (async () => {
@@ -49,30 +54,43 @@
                         title.classList.add('destination-title');
                         title.textContent = destination.title;
 
-                        const country = document.createElement('p');
+                        const country = document.createElement('div');
                         country.classList.add('destination-country');
                         country.textContent = destination.country;
+
+                        // create a new div for country 
+                        // add the svg that you find in the folder img with the name Ping.svg
+
+                        const countryContainer = document.createElement('div');
+                        countryContainer.classList.add('country-container');
+                       
+
+                        const countryImage = document.createElement('img');
+                        countryImage.src = './img/Ping.svg';
+                        countryImage.classList.add('country-image');
+                        countryContainer.appendChild(countryImage);
+                        countryContainer.appendChild(country);
 
                         const description = document.createElement('p');
                         description.textContent = destination.description;
 
                         const link = document.createElement('a');
                         link.href = destination.link;
-                        link.textContent = 'Link';
+                        link.textContent = 'View on Google Maps';
+                        link.classList.add('link');
                         link.target = '_blank';
 
-                        //  add contry and the link in a div 
+                        const linkContainer = document.createElement('div');
+                        linkContainer.classList.add('link-container');
+                        linkContainer.appendChild(link);
 
                         const countryLink = document.createElement('div');
                         countryLink.classList.add('country-link');
-                        countryLink.appendChild(country);
-                        countryLink.appendChild(link);
 
+                        country.textContent = country.textContent.toUpperCase();
+                        countryLink.appendChild(countryContainer);
+                        countryLink.appendChild(linkContainer);
 
-                        // detailsContainer.appendChild(title);
-                        // detailsContainer.appendChild(country);
-                        // detailsContainer.appendChild(description);
-                        // detailsContainer.appendChild(link);
 
                         detailsContainer.appendChild(countryLink);
                         detailsContainer.appendChild(title);
