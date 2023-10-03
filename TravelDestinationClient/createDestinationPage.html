@@ -1,69 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Travel Destination</title>
-</head>
-<body>
-    <h1>Create New Travel Destination</h1>
-    <form id="createForm">
-        <label for="country">Country:</label>
-        <input type="text" id="country" required><br><br>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styleCreateDestinationPage.css" />
+  </head>
 
-        <label for="link">Link:</label>
-        <input type="url" id="link" required><br><br>
+  <body id="createDestination">
+    <header>
+      <img src="Fill 214.svg" alt="world" />
+      <p>My travel journal.</p>
+    </header>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" required><br><br>
+    <main>
+      <h1>New destination</h1>
+      <form id="createForm">
+        <label for="country">Country<span>*</span></label>
+        <input type="text" id="country" required /><br />
 
-        <label for="description">Description:</label><br>
-        <textarea id="description" required></textarea><br><br>
+        <label for="title">Title<span>*</span></label>
+        <input type="text" id="title" required /><br />
 
-        <label for="arrivalDate">Arrival Date:</label>
-        <input type="date" id="arrivalDate" required><br><br>
+        <label for="link">Link</label>
+        <input type="url" id="link" /><br />
 
-        <label for="departureDate">Departure Date:</label>
-        <input type="date" id="departureDate" required><br><br>
+        <label for="arrivalDate">Arrival date</label>
+        <input type="date" id="arrivalDate" required /><br />
 
-        <label for="image">Image:</label>
-        <input type="file" id="image" accept="image/*" required><br><br>
+        <label for="departureDate">Departure date</label>
+        <input type="date" id="departureDate" required /><br />
 
-        <button type="button" id="submitBtn">Submit</button>
-    </form>
+        <label for="image">Image</label>
+        <input type="file" id="image" accept="image/*" required /><br />
+
+        <label for="description">Description</label>
+        <textarea id="description" required></textarea><br />
+
+        <div class="buttons">
+          <button type="button" id="cancelBtn">Cancel</button>
+          <button type="button" id="submitBtn">Save</button>
+        </div>
+      </form>
+    </main>
 
     <script>
-        const createForm = document.getElementById('createForm');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Sample destinations data
-        const destinations = [];
-
-        submitBtn.addEventListener('click', function () {
-            // Get form values
-            const country = document.getElementById('country').value;
-            const link = document.getElementById('link').value;
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const arrivalDate = document.getElementById('arrivalDate').value;
-            const departureDate = document.getElementById('departureDate').value;
-            const image = document.getElementById('image').files[0]; // Assuming a single image file
-
-            // Create a destination object
-            const destination = {
-                country,
-                link,
-                title,
-                description,
-                arrivalDate,
-                departureDate,
-                image
-            };
-
-            destinations.push(destination);
-
-            window.location.replace("./index.html");
+      const imageToBase64 = (file) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (e) => reject(e);
         });
+
+      const createForm = document.getElementById("createForm");
+      const submitBtn = document.getElementById("submitBtn");
+
+      // Sample destinations data
+      const destinations = [];
+
+      submitBtn.addEventListener("click", async () => {
+        // Get form values
+        const country = document.getElementById("country").value;
+        const link = document.getElementById("link").value;
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const arrivalDate = document.getElementById("arrivalDate").value;
+        const departureDate = document.getElementById("departureDate").value;
+        const image = await imageToBase64(document.getElementById("image").files[0]); // Assuming a single image file
+
+        // Create a destination object
+        const destination = {
+          country,
+          link,
+          title,
+          description,
+          arrivalDate,
+          departureDate,
+          image,
+        };
+
+        const response = await fetch("http://localhost:3000/destinations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(destination),
+        });
+        console.log(response.json());
+
+        window.location.replace("./index.html");
+      });
+
+      //Cancel button taking back to home
+      document.querySelector("#cancelBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.replace("./index.html");
+      });
     </script>
-</body>
+  </body>
 </html>
