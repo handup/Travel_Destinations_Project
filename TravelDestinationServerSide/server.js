@@ -5,7 +5,7 @@ import cors from 'cors'
 const app = express();
 
 const port = 3000;
-app.use(express.json({ limit: '1000Gb' }))
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
@@ -20,7 +20,7 @@ app.use(cors({
 
 
 // GET localhost:40000/destinations => return all destinations
-app.get('/destinations', async (req, res) => await getDestinations().then(result => res.send(result)).catch(err=>console.log(err)));
+app.get('/destinations', async (_, res) => await getDestinations().then(result => res.send(result)).catch(err=>console.log(err)));
 
 // POST localhost:40000/destinations => add a new destination
 app.post('/destinations', async (req, res) =>

@@ -1,5 +1,9 @@
 import mongoose from "mongoose"
 
+
+const hostname = '127.0.0.1';
+const uri = `mongodb://${hostname}:27017`;
+
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,8 +25,6 @@ const destinationSchema = new mongoose.Schema({
   image: String,
 });
 
-const hostname = '127.0.0.1';
-const uri = `mongodb://${hostname}:27017`;
 
   
 export const Destination = mongoose.model('destinations', destinationSchema);
