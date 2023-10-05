@@ -29,4 +29,4 @@ const destinationSchema = new mongoose.Schema({
   
 export const Destination = mongoose.model('destinations', destinationSchema);
 export const getDestinations = () => Destination.find()
-export const createDestination = (newDestination) => new Destination(...newDestination).save()
+export const createDestination = (newDestination) => new Destination(newDestination).save()
