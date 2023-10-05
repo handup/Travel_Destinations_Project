@@ -2,7 +2,7 @@
 
 const authAPI = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDov5v-0OIqf3JbTINyc-yJdt4OX91sVdY";
 
-//This is the mocked version of the createSignup functionality:
+/* //This is the mocked version of the createSignup functionality:
 //For now, it is just a Mock
 const mockUserObject = {
   userId: 1,
@@ -20,10 +20,10 @@ export async function signUp(email, password, confirm) {
       resolve({ ...mockUserObject, email });
     }
   });
-}
+} */
 
-/* export async function signUp(email, password, confirm) {
-  const response = fetch(authAPI, {
+export async function signUp(email, password) {
+  const response = await fetch("http://localhost:3000/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,8 +34,8 @@ export async function signUp(email, password, confirm) {
       returnSecureToken: true,
     }),
   });
-  return response;
-} */
+  console.log(response.json());
+}
 
 export async function login() {
   //Do something

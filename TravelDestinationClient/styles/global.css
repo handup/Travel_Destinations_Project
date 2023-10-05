@@ -172,6 +172,8 @@ h1 {
 .form-group {
   position: relative;
   margin-top: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .error-message {
