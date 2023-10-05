@@ -17,15 +17,36 @@ mongoose
   });
 
 const destinationSchema = new mongoose.Schema({
-  country: String,
-  link: String,
-  title: String,
+  country: {
+    type: String,
+    minLength: [3, 'Too short '],
+    required: true
+  },
+  link:{
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    minLength: [3, 'Too short'],
+    required: true
+  },
   description: String,
-  arrivalDate: String,
-  departureDate: String,
+  arrivalDate: {
+    type: Date,
+    required: true
+  },
+  departureDate: {
+    type: Date,
+    required: true
+  },
   image: String,
 });
 
-export const Destination = mongoose.model("destinations", destinationSchema);
-export const getDestinations = () => Destination.find();
+
+  
+export const Destination = mongoose.model('destinations', destinationSchema);
+export const getDestinations = () => Destination.find()
 export const createDestination = (newDestination) => new Destination(newDestination).save();
+export const deleteDestination = (id) => Destination.findByIdAndDelete(id)
+export const updateDestination = (id, newDestination) => Destination.findByIdAndUpdate(id, newDestination)
