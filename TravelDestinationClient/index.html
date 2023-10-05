@@ -18,7 +18,38 @@
   
     <h1>Destinations</h1>
     <ul id="destinationList">
-        <!-- Existing destinations will be displayed here -->
+        <template id="destination-template">
+            <div class="destination-card">
+                <div class="destination-image">
+                  <img src="" alt="aaaaa" class="image">
+                </div>
+              
+                <div class="destination-details">
+                  <div class="country-link">
+                    <div class="country-container">
+                      <img src="./img/Ping.svg" class="country-image">
+                      <div class="destination-country">Country</div>
+                    </div>
+              
+                    <div class="link-container">
+                      <a href="aaaaa" class="link" target="_blank">View on Google Maps</a>
+                    </div>
+                  </div>
+              
+                  <h2 class="destination-title">Here would be a title</h2>
+              
+                  <div class="container-arival-and-departure">
+                    <div class="arrival-date">2023-10-03</div>
+                    <div class="departure-date">2023-10-27</div>
+                  </div>
+              
+                  <p>Paragraph</p>
+
+                  <button id="delete" class="delete-destination">Delete</button>
+                  <button id="edit" class="edit-destination">Edit</button>
+                </div>
+              </div>
+          </template>
     </ul>
     <div class="hero-button">
         <a href="./createDestinationPage.html" class="create-button">
@@ -27,106 +58,8 @@
         </a>
     </div>
 
-    <script>
-        (async () => {
-            try {
-                function base64ToImage(base64) {
-                    var image = new Image();
-                    image.src = base64;
-                    return image;
-                }
-
-                const response = await fetch('http://localhost:3000/destinations');
-                const destinations = await response.json();
-                console.log(destinations);
-
-                const destinationList = document.getElementById('destinationList');
-
-                function renderDestinations() {
-                    destinationList.innerHTML = '';
-
-                    destinations.forEach((destination, index) => {
-                        const card = document.createElement('div');
-                        card.classList.add('destination-card');
-
-                        const imageContainer = document.createElement('div');
-                        imageContainer.classList.add('destination-image');
-                        imageContainer.appendChild(base64ToImage(destination.image));
-
-                        const detailsContainer = document.createElement('div');
-                        detailsContainer.classList.add('destination-details');
-
-                        const title = document.createElement('h2');
-                        title.classList.add('destination-title');
-                        title.textContent = destination.title;
-
-                        const country = document.createElement('div');
-                        country.classList.add('destination-country');
-                        country.textContent = destination.country;
-
-                        const countryContainer = document.createElement('div');
-                        countryContainer.classList.add('country-container');
-                       
-                        const countryImage = document.createElement('img');
-                        countryImage.src = './img/Ping.svg';
-                        countryImage.classList.add('country-image');
-                        countryContainer.appendChild(countryImage);
-                        countryContainer.appendChild(country);
-
-                        const description = document.createElement('p');
-                        description.textContent = destination.description;
-
-                        const link = document.createElement('a');
-                        link.href = destination.link;
-                        link.textContent = 'View on Google Maps';
-                        link.classList.add('link');
-                        link.target = '_blank';
-
-                        const arrivalDate = document.createElement('div');
-                        arrivalDate.classList.add('arrival-date');
-                        arrivalDate.textContent = destination.arrivalDate;
-
-                        const departureDate = document.createElement('div');
-                        departureDate.classList.add('departure-date');
-                        departureDate.textContent = destination.departureDate;
-
-                        const containerArrivalAndDeparture = document.createElement('div');
-                        containerArrivalAndDeparture.classList.add('container-arival-and-departure');
-                        containerArrivalAndDeparture.appendChild(arrivalDate);
-                        containerArrivalAndDeparture.appendChild(departureDate);
-
-
-                        const linkContainer = document.createElement('div');
-                        linkContainer.classList.add('link-container');
-                        linkContainer.appendChild(link);
-
-                        const countryLink = document.createElement('div');
-                        countryLink.classList.add('country-link');
-
-                        country.textContent = country.textContent.toUpperCase();
-                        countryLink.appendChild(countryContainer);
-                        countryLink.appendChild(linkContainer);
-
-
-                        detailsContainer.appendChild(countryLink);
-                        detailsContainer.appendChild(title);
-                        detailsContainer.appendChild(containerArrivalAndDeparture);
-                        detailsContainer.appendChild(description);
-
-                        card.appendChild(imageContainer);
-                        card.appendChild(detailsContainer);
-
-                        destinationList.appendChild(card);
-                    });
-                }
-
-                renderDestinations()
-            } catch (error) {
-                console.error('Error loading image:', error);
-            }
-        })();
-
-    </script>
+    <script src="destinations.js"></script>
+  
 </body>
 
 </html>
