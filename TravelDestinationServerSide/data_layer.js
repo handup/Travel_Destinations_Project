@@ -18,16 +18,16 @@ mongoose.connect(uri, {
 const destinationSchema = new mongoose.Schema({
   country: {
     type: String,
-    min: [3, 'Too short '],
+    minLength: [3, 'Too short '],
     required: true
   },
   link:{
-    type: mongoose.SchemaTypes.Url,
+    type: String,
     required: true
   },
   title: {
     type: String,
-    min: [3, 'Too short'],
+    minLength: [3, 'Too short'],
     required: true
   },
   description: String,
