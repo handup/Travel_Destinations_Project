@@ -16,12 +16,29 @@ mongoose.connect(uri, {
   });
 
 const destinationSchema = new mongoose.Schema({
-  country: String,
-  link: String,
-  title: String,
+  country: {
+    type: String,
+    min: [3, 'Too short '],
+    required: true
+  },
+  link:{
+    type: mongoose.SchemaTypes.Url,
+    required: true
+  },
+  title: {
+    type: String,
+    min: [3, 'Too short'],
+    required: true
+  },
   description: String,
-  arrivalDate: String,
-  departureDate: String,
+  arrivalDate: {
+    type: Date,
+    required: true
+  },
+  departureDate: {
+    type: Date,
+    required: true
+  },
   image: String,
 });
 
