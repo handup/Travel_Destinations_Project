@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../styles/global.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/signupLogin.css" />
+    <title>Sign up</title>
+    <script type="module" src="signup.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <img src="../Fill 214.svg" alt="world" />
+      <p>My travel journal.</p>
+    </header>
+
+    <main>
+      <h1>Sign up</h1>
+      <form id="signupForm" class="basicForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" />
+          <div class="error-message"><p>The email should be a Cph business email</p></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" />
+          <div class="error-message"><p>The password should have at least 8 characters and a combination of uppercase letters, lowercase letters, and numbers</p></div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm password</label>
+          <input type="password" name="confirm-password" id="confirm-password" />
+          <div class="error-message"><p>The passwords don't match</p></div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="buttonFill">Sign up</button>
+        <p class="button-error">Your sign up details don't comply with all requirements. Please check all field values are valid</p>
+      </form>
+    </main>
+  </body>
+</html>
