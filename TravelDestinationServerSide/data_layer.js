@@ -1,20 +1,19 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-
-const hostname = '127.0.0.1';
-// by default it will go to test database and to avoid it I specified the name of the database
-const dbName = 'travel_destinations';
+const hostname = "127.0.0.1";
+const dbName = "travel_destination";
 const uri = `mongodb://${hostname}:27017/${dbName}`;
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log("Connected to MongoDB");
   })
   .catch((err) => {
-    console.error('Error connecting to MongoDB:', err);
+    console.error("Error connecting to MongoDB:", err);
   });
 
 const destinationSchema = new mongoose.Schema({
