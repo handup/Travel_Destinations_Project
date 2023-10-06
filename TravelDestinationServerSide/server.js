@@ -1,4 +1,4 @@
-import { getDestinations, createDestination, deleteDestination, updateDestination } from './data_layer.js';
+import { getDestinations, createDestination, deleteDestination, updateDestination } from './schemas/destination.js';
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser';

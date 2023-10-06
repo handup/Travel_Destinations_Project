@@ -1,22 +1,6 @@
-import mongoose from "mongoose";
+import { db } from '../database.js'
 
-const hostname = "127.0.0.1";
-const dbName = "travel_destination";
-const uri = `mongodb://${hostname}:27017/${dbName}`;
-
-mongoose
-  .connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
-  });
-
-const destinationSchema = new mongoose.Schema({
+const destinationSchema = new db.Schema({
   country: {
     type: String,
     minLength: [3, 'Too short '],
@@ -45,7 +29,7 @@ const destinationSchema = new mongoose.Schema({
 
 
   
-export const Destination = mongoose.model('destinations', destinationSchema);
+export const Destination = db.model('destinations', destinationSchema);
 export const getDestinations = () => Destination.find()
 export const createDestination = (newDestination) => new Destination(newDestination).save();
 export const deleteDestination = (id) => Destination.findByIdAndDelete(id)
