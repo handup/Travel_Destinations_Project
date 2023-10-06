@@ -1,8 +1,11 @@
 import { getDestinations, createDestination, deleteDestination, updateDestination } from './schemas/destination.js';
+import { User } from './schemas/user.js';
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser';
-
+import passport from 'passport';
+import session from 'express-session';
+import { Strategy } from 'passport-local'
 
 const app = express();
 const port = 3000;
@@ -13,6 +16,19 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'keyboard cat',
+  cookie: { secure: true }
+}))
+
+// Passport
+passport.use(new Strategy(User.authenticate()));
+
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
 app.use(
   cors({
@@ -40,19 +56,23 @@ app.post(
       .catch((err) => console.log(err))
 );
 
-// POST localhost:40000/destinations => add a new destination
-app.post(
-  "/users",
-  async (req, res) =>
-    await createUser(req.body)
-      .then((result) => res.status(201).send(`A document was inserted with the _id: ${result.insertedId}`))
-      .catch((err) => console.log(err))
-);
-
-app.post('/destinations', async (req, res) =>
-  await createDestination(req.body)
-  .then(result => res.status(201).send(`A document was inserted with the _id: ${result.insertedId}`))
-  .catch(err=> console.log(err)))
+app.post("/register", (req, res) => { 
+	User.register(new User({ email: req.body.email, username: req.body.email }), req.body.password, function (err, user) { 
+		if (err) { 
+			res.json({ success: false, message: "Your account could not be saved. Error: " + err }); 
+		} 
+		else { 
+			req.login(user, (er) => { 
+				if (er) { 
+					res.json({ success: false, message: er }); 
+				} 
+				else { 
+					res.json({ success: true, message: "Your account has been saved" }); 
+				} 
+			}); 
+		} 
+	}); 
+}); 
 
 
 // DELETE localhost:40000/destinations/:id => delete a destination
