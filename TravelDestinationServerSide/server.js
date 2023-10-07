@@ -5,6 +5,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
+import jwt from 'jsonwebtoken';
 import { Strategy } from 'passport-local'
 
 const app = express();
@@ -17,10 +18,12 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
+const secretKey = 'keyboard cat'
+
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'keyboard cat',
+  secret: secretKey,
   cookie: { secure: true }
 }))
 
@@ -91,7 +94,7 @@ app.post("/login", function (req, res) {
 					res.json({ success: false, message: "username or password incorrect" }); 
 				} 
 				else { 
-					const token = jwt.sign({ userId: user._id, username: user.username }, secretkey, { expiresIn: "24h" }); 
+					const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, { expiresIn: "24h" }); 
 					res.json({ success: true, message: "Authentication successful", token: token }); 
 				} 
 			} 
@@ -106,7 +109,7 @@ app.delete('/destinations/:id', async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await deleteDestination(id)
-  .then(result => res.status(200).send(`The document with the _id: ${id} was deleted`))
+  .then(_ => res.status(200).send(`The document with the _id: ${id} was deleted`))
   .catch(err=> console.log(err))
 });
 
@@ -115,6 +118,6 @@ app.put('/destinations/:id', async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await updateDestination(id, req.body)
-  .then(result => res.status(200).send(`The document with the _id: ${id} was updated`))
+  .then(_ => res.status(200).send(`The document with the _id: ${id} was updated`))
   .catch(err=> console.log(err))
 });
