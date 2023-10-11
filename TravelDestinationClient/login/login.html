@@ -7,12 +7,27 @@
     <link rel="stylesheet" href="../styles/signupLogin.css" />
     <title>Log in</title>
     <script type="module" src="login.js" defer></script>
+    <script type="module" src="../header.js" defer></script>
   </head>
   <body>
-    <header>
-      <img src="../Fill 214.svg" alt="world" />
-      <p>My travel journal.</p>
-    </header>
+    <body id="createDestination">
+      <header>
+        <a href="../index.html">
+          <div class="headerLogo">
+            <img src="Fill 214.svg" alt="world" />
+            <p>My travel journal.</p>
+          </div>
+        </a>
+        <div class="headerButtons">
+          <a class="loginButton" href="login/login.html">
+            <button class="headerButton">Log in</button>
+          </a>
+          <a class="signupButton" href="signup/signup.html">
+            <button class="headerButton noFill">Sign up</button>
+          </a>
+          <p class="loginStatus hidden">Logged in</p>
+        </div>
+      </header>
 
     <main>
       <h1>Log in</h1>

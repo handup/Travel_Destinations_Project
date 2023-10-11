@@ -1,65 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Show Existing Travel Destinations</title>
-    <link rel="stylesheet" href="styleIndex.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleIndex.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styleCreateDestinationPage.css" />
-</head>
+    <script type="module" src="header.js" defer></script>
+  </head>
 
-<body  id="createDestination">
+  <body id="createDestination">
     <header>
-        <img src="Fill 214.svg" alt="world" />
-        <p>My travel journal.</p>
-      </header>
-  
+      <a href="index.html">
+        <div class="headerLogo">
+          <img src="Fill 214.svg" alt="world" />
+          <p>My travel journal.</p>
+        </div>
+      </a>
+      <div class="headerButtons">
+        <a class="loginButton" href="login/login.html">
+          <button class="headerButton">Log in</button>
+        </a>
+        <a class="signupButton" href="signup/signup.html">
+          <button class="headerButton noFill">Sign up</button>
+        </a>
+        <p class="loginStatus hidden">Logged in</p>
+      </div>
+    </header>
+
     <h1>Destinations</h1>
     <ul id="destinationList">
-        <template id="destination-template">
-            <div class="destination-card">
-                <div class="destination-image">
-                  <img src="" alt="aaaaa" class="image">
-                </div>
-              
-                <div class="destination-details">
-                  <div class="country-link">
-                    <div class="country-container">
-                      <img src="./img/Ping.svg" class="country-image">
-                      <div class="destination-country">Country</div>
-                    </div>
-              
-                    <div class="link-container">
-                      <a href="aaaaa" class="link" target="_blank">View on Google Maps</a>
-                    </div>
-                  </div>
-              
-                  <h2 class="destination-title">Here would be a title</h2>
-              
-                  <div class="container-arival-and-departure">
-                    <div class="arrival-date">2023-10-03</div>
-                    <div class="departure-date">2023-10-27</div>
-                  </div>
-              
-                  <p>Paragraph</p>
+      <template id="destination-template">
+        <div class="destination-card">
+          <div class="destination-image">
+            <img src="" alt="aaaaa" class="image" />
+          </div>
 
-                  <button id="delete" class="delete-destination">Delete</button>
-                  <button id="edit" class="edit-destination">Edit</button>
-                </div>
+          <div class="destination-details">
+            <div class="country-link">
+              <div class="country-container">
+                <img src="./img/Ping.svg" class="country-image" />
+                <div class="destination-country">Country</div>
               </div>
-          </template>
+
+              <div class="link-container">
+                <a href="aaaaa" class="link" target="_blank">View on Google Maps</a>
+              </div>
+            </div>
+
+            <h2 class="destination-title">Here would be a title</h2>
+
+            <div class="container-arival-and-departure">
+              <div class="arrival-date">2023-10-03</div>
+              <div class="departure-date">2023-10-27</div>
+            </div>
+
+            <p>Paragraph</p>
+
+            <button id="delete" class="delete-destination">Delete</button>
+            <button id="edit" class="edit-destination">Edit</button>
+          </div>
+        </div>
+      </template>
     </ul>
     <div class="hero-button">
-        <a href="./createDestinationPage.html" class="create-button">
-            <img src="./img/Plus-Icon.png" alt="Plus Icon">
-            <span>Add entry</span>
-        </a>
+      <a href="./createDestinationPage.html" class="create-button">
+        <img src="./img/Plus-Icon.png" alt="Plus Icon" />
+        <span>Add entry</span>
+      </a>
     </div>
 
     <script src="destinations.js"></script>
-  
-</body>
-
+  </body>
 </html>

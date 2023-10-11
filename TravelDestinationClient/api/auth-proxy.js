@@ -41,6 +41,6 @@ export async function logout() {
 
 //A function, to retrieve the stored user infromation
 export function userAuthValidation() {
-  const userObject = localStorage.getItem("userObject");
-  return userObject;
+  const token = localStorage.getItem("token");
+  return token;
 }

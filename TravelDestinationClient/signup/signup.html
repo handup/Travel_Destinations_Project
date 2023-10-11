@@ -8,19 +8,28 @@
     <title>Sign up</title>
     <script type="module" src="./signup.js" defer></script>
     <script type="module" src="./signupValidation.js" defer></script>
+    <script type="module" src="../header.js" defer></script>
   </head>
   <body>
     <header>
-      <div class="headerLogo">
-        <img src="../Fill 214.svg" alt="world" />
-        <p>My travel journal.</p>
-      </div>
-      <div class="headerButtons">
-        <button class="headerButton hidden">Log in</button>
-        <button class="headerButton noFill hidden">Sign up</button>
-        <p class="loginStatus hidden">Logged in</p>
-      </div>
-    </header>
+      <body id="createDestination">
+        <header>
+          <a href="../index.html">
+            <div class="headerLogo">
+              <img src="Fill 214.svg" alt="world" />
+              <p>My travel journal.</p>
+            </div>
+          </a>
+          <div class="headerButtons">
+            <a class="loginButton" href="login/login.html">
+              <button class="headerButton">Log in</button>
+            </a>
+            <a class="signupButton" href="signup/signup.html">
+              <button class="headerButton noFill">Sign up</button>
+            </a>
+            <p class="loginStatus hidden">Logged in</p>
+          </div>
+        </header>
 
     <main>
       <h1>Sign up</h1>

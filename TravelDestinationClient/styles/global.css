@@ -23,14 +23,6 @@ html {
 }
 
 /*
-    3. Allow percentage-based heights in the application
-  */
-html,
-body {
-  height: 100%;
-}
-
-/*
     Typographic tweaks!
     4. Add accessible line-height
     5. Improve text rendering
@@ -38,18 +30,6 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
-
-/*
-    6. Improve media defaults
-  */
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
 }
 
 /*
@@ -95,6 +75,14 @@ header {
   padding: 14px 10px;
   color: white;
   justify-content: space-between;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header p {
+  font-size: 16px;
 }
 
 .headerLogo {
