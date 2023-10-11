@@ -7,7 +7,7 @@ form.addEventListener("submit", (event) => {
 
   //Get the data from the form
   const data = new FormData(form);
-  console.log(data.get("email"), data.get("password"));
+  //console.log(data.get("email"), data.get("password"));
 
   loginUser(data);
 });
