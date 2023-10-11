@@ -87,3 +87,9 @@ h1 {
   font-size: 18px;
   cursor: pointer;
 }
+
+
+/* input[type='file'] {
+  color: transparent;
+  background-color: white;
+} */

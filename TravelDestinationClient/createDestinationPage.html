@@ -34,7 +34,12 @@
         <input type="date" id="departureDate" required /><br />
 
         <label for="image">Image</label>
-        <input type="file" id="image" accept="image/*" required /><br />
+        <!-- <input type="file" id="image" accept="image/*" required /> -->
+
+        <div class="inputWrapper">
+          <input class="fileInput" type="file" id="image" required/><br/>
+        </div>
+        <img id="preview" type="file" src="" alt="Preview" />
 
         <label for="description">Description</label>
         <textarea id="description" required></textarea><br />
@@ -46,59 +51,6 @@
       </form>
     </main>
 
-    <script>
-      const imageToBase64 = (file) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = (e) => reject(e);
-        });
-
-      const createForm = document.getElementById("createForm");
-      const submitBtn = document.getElementById("submitBtn");
-
-      // Sample destinations data
-      const destinations = [];
-
-      submitBtn.addEventListener("click", async () => {
-        // Get form values
-        const country = document.getElementById("country").value;
-        const link = document.getElementById("link").value;
-        const title = document.getElementById("title").value;
-        const description = document.getElementById("description").value;
-        const arrivalDate = document.getElementById("arrivalDate").value;
-        const departureDate = document.getElementById("departureDate").value;
-        const image = await imageToBase64(document.getElementById("image").files[0]); // Assuming a single image file
-
-        // Create a destination object
-        const destination = {
-          country,
-          link,
-          title,
-          description,
-          arrivalDate,
-          departureDate,
-          image,
-        };
-
-        const response = await fetch("http://localhost:3000/destinations", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(destination),
-        });
-        console.log(response.json());
-
-        window.location.replace("./index.html");
-      });
-
-      //Cancel button taking back to home
-      document.querySelector("#cancelBtn").addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.replace("./index.html");
-      });
-    </script>
+    <script src="createDestinationPage.js"></script>
   </body>
 </html>
