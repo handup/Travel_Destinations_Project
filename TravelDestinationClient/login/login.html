@@ -16,7 +16,7 @@
 
     <main>
       <h1>Log in</h1>
-      <form id="create-login-form" class="basicForm">
+      <form id="loginForm" class="basicForm">
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" name="email" id="email" />
@@ -27,7 +27,8 @@
           <input type="password" name="password" id="password" />
         </div>
 
-        <button type="button" id="submitBtn" class="buttonFill">Log in</button>
+        <button type="submit" id="submitBtn" class="buttonFill">Log in</button>
+        <p class="button-error">We couldn’t find an account matching the email and password you entered. Please check your email and password and try again.</p>
       </form>
     </main>
   </body>
