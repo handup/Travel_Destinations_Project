@@ -11,7 +11,9 @@ const createDestinationElement = (destination) =>  {
   
     card.querySelector('.image').src = destination.image;
     card.querySelector('.destination-country').textContent = destination.country;
-    card.querySelector('.link').href = destination.link;
+    console.log("what is this in the end??",  destination.link)
+    card.querySelector('.link').href = `http://${destination.link}`;
+    card.querySelector('.link').target = '_blank';
     card.querySelector('.destination-title').textContent = destination.title;
     card.querySelector('.arrival-date').textContent = destination.arrivalDate ? destination.arrivalDate.substring(0, 10): destination.arrivalDate;
     card.querySelector('.departure-date').textContent = destination.departureDate ? destination.departureDate.substring(0, 10): destination.departureDate;
