@@ -18,7 +18,7 @@ export async function loginUser(data) {
     const response = await login(data.get("email"), data.get("password"));
     console.log(response);
 
-    localStorage.setItem("token", JSON.stringify(response.token));
+    localStorage.setItem("token", response.token);
     console.log(localStorage.getItem("token"));
 
     //We are redirectiong to index page

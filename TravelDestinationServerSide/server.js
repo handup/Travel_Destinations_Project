@@ -1,12 +1,13 @@
 import { getDestinations, createDestination, deleteDestination, updateDestination } from './schemas/destination.js';
-import { User } from './schemas/user.js';
+import { User, getUser } from './schemas/user.js';
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
 import jwt from 'jsonwebtoken';
-import { Strategy } from 'passport-local'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { Strategy as jwtStrategy, ExtractJwt as extractJwt} from 'passport-jwt'
 
 const app = express();
 const port = 3000;
@@ -28,7 +29,28 @@ app.use(session({
 }))
 
 // Passport
-passport.use(new Strategy(User.authenticate()));
+passport.use('local', new LocalStrategy(User.authenticate()));
+
+passport.use('jwt', new jwtStrategy({
+	jwtFromRequest: extractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey   : 'keyboard cat'
+},
+function (jwtPayload, cb) {
+
+	//find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+	return getUser(jwtPayload.id)
+		.then(user => {
+			return cb(null, user);
+		})
+		.catch(err => {
+			return cb(err);
+		});
+}
+));
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(passport.initialize()); 
 app.use(passport.session()); 
@@ -40,12 +62,6 @@ app.use(
     credentials: true,
   })
 );
-
-var isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.json("not authenticated");
-}
 
 
 // GET localhost:40000/destinations => return all destinations
@@ -84,35 +100,30 @@ app.post("/register", (req, res) => {
 	}); 
 }); 
 
-app.post("/login", function (req, res) { 
-	if (!req.body.username) { 
-		res.json({ success: false, message: "Email was not given" }) 
-	} 
-	else if (!req.body.password) { 
-		res.json({ success: false, message: "Password was not given" }) 
-	} 
-	else { 
-		passport.authenticate("local", function (err, user, info) { 
-			if (err) { 
-				res.json({ success: false, message: err }); 
-			} 
-			else { 
-				if (!user) { 
-					res.json({ success: false, message: "username or password incorrect" }); 
-				} 
-				else { 
-					const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, { expiresIn: "24h" }); 
-					res.json({ success: true, message: "Authentication successful", token: token }); 
-				} 
-			} 
-		})(req, res); 
-	} 
+app.post("/login", (req, res, next) => { 
+	
+passport.authenticate('local', {session: false}, (err, user, info) => {
+	if (err || !user) {
+		return res.status(400).json({
+			message: 'Something is not right',
+			user   : user
+		});
+	}
+   req.login(user, {session: false}, (err) => {
+	   if (err) {
+		   res.send(err);
+	   }
+	   // generate a signed son web token with the contents of user object and return it in the response
+	   const token = jwt.sign({id: user.id}, 'keyboard cat');
+	   return res.json({user, token});
+	});
+})(req, res);
 }); 
 
 
 
 // DELETE localhost:40000/destinations/:id => delete a destination
-app.delete('/destinations/:id', isAuthenticated, async (req, res) => {
+app.delete('/destinations/:id', passport.authenticate('jwt', {session: false}), async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await deleteDestination(id)

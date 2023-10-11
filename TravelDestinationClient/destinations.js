@@ -2,10 +2,10 @@
 
 const destinationList = document.getElementById('destinationList');
 
-const createDestinationElement = (destination) =>  {
+const createDestinationElement = (destination) => {
     const template = document.getElementById('destination-template');
     const card = template.content.cloneNode(true);
-  
+
     card.querySelector('.image').src = destination.image;
     card.querySelector('.destination-country').textContent = destination.country;
     card.querySelector('.link').href = destination.link;
@@ -25,63 +25,67 @@ const base64ToImage = (base64) => {
     return image;
 }
 
-const renderDestinations = async () =>  {
+const renderDestinations = async () => {
     try {
-      const response = await fetch('http://localhost:3000/destinations');
-      const destinations = await response.json();
-      console.log("destinations", destinations);
+        const response = await fetch('http://localhost:3000/destinations');
+        const destinations = await response.json();
+        console.log("destinations", destinations);
 
-  
-      const destinationElements = destinations.map(createDestinationElement);
-      destinationElements.forEach((element) => {
-        destinationList.appendChild(element);
-      });
 
-     const deleteButtons = document.querySelectorAll('.delete-destination');
+        const destinationElements = destinations.map(createDestinationElement);
+        destinationElements.forEach((element) => {
+            destinationList.appendChild(element);
+        });
+
+        const deleteButtons = document.querySelectorAll('.delete-destination');
         deleteButtons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            const id = event.target.dataset._id;
-            console.log("this is the id", id)
-            try {
-            const response = await fetch(`http://localhost:3000/destinations/${id}`, {
-                method: 'DELETE',
+            button.addEventListener('click', async (event) => {
+                const id = event.target.dataset._id;
+                console.log("this is the id", id)
+                try {
+                    const token = localStorage.getItem("token")
+                    const response = await fetch(`http://localhost:3000/destinations/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    const result = await response.text();
+                    console.log(result);
+                    if (result.includes("deleted")) {
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error deleting destination:', error);
+                }
             });
-            const result = await response.text();
-            console.log(result);
-            if(result.includes("deleted")){
-                location.reload();
-            }
-            } catch (error) {
-            console.error('Error deleting destination:', error);
-            }
-        });
         });
 
-       
-    const editButtons = document.querySelectorAll('.edit-destination');
+
+        const editButtons = document.querySelectorAll('.edit-destination');
         editButtons.forEach((button) => {
-        button.addEventListener('click', async (event) => {
-            const id = event.target.dataset._id;
-            console.log("this is the id", id)
-            try {
-            const response = await fetch(`http://localhost:3000/destinations/${id}`, {
-                method: 'PUT',
+            button.addEventListener('click', async (event) => {
+                const id = event.target.dataset._id;
+                console.log("this is the id", id)
+                try {
+                    const response = await fetch(`http://localhost:3000/destinations/${id}`, {
+                        method: 'PUT',
+                    });
+                    const result = await response.text();
+                    console.log(result);
+                    if (result.includes("deleted")) {
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error deleting destination:', error);
+                }
             });
-            const result = await response.text();
-            console.log(result);
-            if(result.includes("deleted")){
-                location.reload();
-            }
-            } catch (error) {
-            console.error('Error deleting destination:', error);
-            }
-        });
         });
     } catch (error) {
-      console.error('Error loading destinations:', error);
+        console.error('Error loading destinations:', error);
     }
-  }
-  
+}
+
 
 renderDestinations();
 
