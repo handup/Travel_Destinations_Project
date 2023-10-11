@@ -38,11 +38,11 @@ emailInput.addEventListener("blur", () => {
     //Email valid. Procees to test if it's from the right domain (Second argument is to check that the string ENDS with this domain, and that it doesn't just contain it)
     if (emailValue.indexOf("@cphbusiness.dk", emailValue.length - "@cphbusiness.dk".length) !== -1) {
       //VALID
-      console.log("email is valid");
+      //console.log("email is valid");
       hideError(emailErrorMessage);
       emailDomain = "valid";
     } else {
-      console.log("email is not valid");
+      //console.log("email is not valid");
       showError(emailInput, emailErrorMessage);
       emailDomain = "invalid";
     }
@@ -86,12 +86,12 @@ passwordInput.addEventListener("blur", function () {
 
   if (isValidPassword(password)) {
     // Password is valid, hide the error message
-    console.log("password is valid");
+    //console.log("password is valid");
     hideError(passwordErrorMessage);
     passwordCriteria = "valid";
   } else {
     // Password is invalid, show the error message
-    console.log("password is invalid");
+    //console.log("password is invalid");
     showError(passwordInput, passwordErrorMessage);
     passwordCriteria = "invalid";
   }
@@ -107,12 +107,12 @@ confirmPasswordInput.addEventListener("blur", function () {
 
   if (password !== confirmPassword) {
     //Confirm password is invalid, show the error message
-    console.log("confirm password is invalid");
+    //console.log("confirm password is invalid");
     showError(confirmPasswordInput, confirmPasswordErrorMessage);
     matchingPasswords = "invalid";
   } else {
     //Confirm password is valid, hide the error message
-    console.log("confirm password is valid");
+    //console.log("confirm password is valid");
     hideError(confirmPasswordErrorMessage);
     matchingPasswords = "valid";
   }
@@ -123,22 +123,22 @@ form.addEventListener("submit", (event) => {
 
   //Get the data from the form
   const data = new FormData(form);
-  console.log(form);
-  console.log(data.get("email"), data.get("password"), data.get("confirm-password"));
+  //console.log(form);
+  //console.log(data.get("email"), data.get("password"), data.get("confirm-password"));
 
   //validate form
   validateForm(data);
 });
 
 function validateForm(data) {
-  console.log(emailDomain, passwordCriteria, matchingPasswords);
+  //console.log(emailDomain, passwordCriteria, matchingPasswords);
 
   if (emailDomain === "valid" && passwordCriteria === "valid" && matchingPasswords === "valid") {
-    console.log("everything is valid");
-    console.log(data);
+    //console.log("everything is valid");
+    //console.log(data);
     createSignup(data);
   } else {
-    console.log("something is not valid");
+    //console.log("something is not valid");
     document.querySelector(".button-error").style.display = "block";
   }
 }
