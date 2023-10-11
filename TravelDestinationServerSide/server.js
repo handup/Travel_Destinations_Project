@@ -5,6 +5,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import session from 'express-session';
+import jwt from 'jsonwebtoken';
 import { Strategy } from 'passport-local'
 
 const app = express();
@@ -17,10 +18,12 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
+const secretKey = 'keyboard cat'
+
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'keyboard cat',
+  secret: secretKey,
   cookie: { secure: true }
 }))
 
@@ -37,6 +40,13 @@ app.use(
     credentials: true,
   })
 );
+
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.json("not authenticated");
+}
+
 
 // GET localhost:40000/destinations => return all destinations
 app.get(
@@ -57,7 +67,7 @@ app.post(
 );
 
 app.post("/register", (req, res) => { 
-	User.register(new User({ email: req.body.email, username: req.body.email }), req.body.password, function (err, user) { 
+	User.register(new User({ username: req.body.email }), req.body.password, function (err, user) { 
 		if (err) { 
 			res.json({ success: false, message: "Your account could not be saved. Error: " + err }); 
 		} 
@@ -74,13 +84,39 @@ app.post("/register", (req, res) => {
 	}); 
 }); 
 
+app.post("/login", function (req, res) { 
+	if (!req.body.username) { 
+		res.json({ success: false, message: "Email was not given" }) 
+	} 
+	else if (!req.body.password) { 
+		res.json({ success: false, message: "Password was not given" }) 
+	} 
+	else { 
+		passport.authenticate("local", function (err, user, info) { 
+			if (err) { 
+				res.json({ success: false, message: err }); 
+			} 
+			else { 
+				if (!user) { 
+					res.json({ success: false, message: "username or password incorrect" }); 
+				} 
+				else { 
+					const token = jwt.sign({ userId: user._id, username: user.username }, secretKey, { expiresIn: "24h" }); 
+					res.json({ success: true, message: "Authentication successful", token: token }); 
+				} 
+			} 
+		})(req, res); 
+	} 
+}); 
+
+
 
 // DELETE localhost:40000/destinations/:id => delete a destination
-app.delete('/destinations/:id', async (req, res) => {
+app.delete('/destinations/:id', isAuthenticated, async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await deleteDestination(id)
-  .then(result => res.status(200).send(`The document with the _id: ${id} was deleted`))
+  .then(_ => res.status(200).send(`The document with the _id: ${id} was deleted`))
   .catch(err=> console.log(err))
 });
 
@@ -89,6 +125,6 @@ app.put('/destinations/:id', async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await updateDestination(id, req.body)
-  .then(result => res.status(200).send(`The document with the _id: ${id} was updated`))
+  .then(_ => res.status(200).send(`The document with the _id: ${id} was updated`))
   .catch(err=> console.log(err))
 });
