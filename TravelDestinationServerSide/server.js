@@ -41,6 +41,13 @@ app.use(
   })
 );
 
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.json("not authenticated");
+}
+
+
 // GET localhost:40000/destinations => return all destinations
 app.get(
   "/destinations",
@@ -105,7 +112,7 @@ app.post("/login", function (req, res) {
 
 
 // DELETE localhost:40000/destinations/:id => delete a destination
-app.delete('/destinations/:id', async (req, res) => {
+app.delete('/destinations/:id', isAuthenticated, async (req, res) => {
   const id = req.params.id;
   console.log("Thi is the id", id)
   await deleteDestination(id)
