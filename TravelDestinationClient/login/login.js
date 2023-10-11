@@ -13,7 +13,7 @@ form.addEventListener("submit", (event) => {
 });
 
 export async function loginUser(data) {
-  console.log(data.get("email"));
+  //console.log(data.get("email"));
   try {
     const response = await login(data.get("email"), data.get("password"));
     console.log(response);

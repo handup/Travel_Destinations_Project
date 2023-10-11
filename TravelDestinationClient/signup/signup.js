@@ -6,11 +6,8 @@ export async function createSignup(data) {
 
     console.log(response);
 
-    const body = await response.json();
-    console.log(body);
-
-    localStorage.setItem("userObject", JSON.stringify(response));
-    console.log(localStorage.getItem("userObject"));
+    localStorage.setItem("token", JSON.stringify(response.token));
+    console.log(localStorage.getItem("token"));
 
     //We are redirectiong to index page
     //window.location.href = "../index.html";

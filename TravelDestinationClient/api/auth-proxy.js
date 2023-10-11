@@ -12,8 +12,11 @@ export async function signUp(email, password) {
       returnSecureToken: true,
     }),
   });
-  console.log(response);
-  return response;
+  const jsonResponse = await response.json();
+
+  console.log(jsonResponse);
+
+  return jsonResponse;
 }
 
 export async function login(username, password) {
