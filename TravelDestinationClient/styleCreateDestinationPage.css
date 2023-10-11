@@ -89,7 +89,11 @@ h1 {
 }
 
 
-/* input[type='file'] {
-  color: transparent;
-  background-color: white;
-} */
+.inputWrapper {
+  width: 100%;
+}
+
+.inputWrapper input {
+  width: 100%;
+  margin-bottom: 20px;
+}

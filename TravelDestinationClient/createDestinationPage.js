@@ -62,10 +62,10 @@ if (selectedDestination) {
 
     const base64Data = await imageToBase64(file);
     console.log("This is the file in the end",file)
+    previewImage.src = base64Data;
     const fileName = document.createTextNode(file.name);
     imageInput.nextSibling.remove();
     imageInput.parentNode.insertBefore(fileName, imageInput.nextSibling);
-    previewImage.src = base64Data;
   });
 
   localStorage.removeItem('selectedDestination');
