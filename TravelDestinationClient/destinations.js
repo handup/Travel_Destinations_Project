@@ -1,7 +1,5 @@
-
-
-// const user = getUser();
-const user = true;
+const tokenUser = userAuthValidation();
+// const user = true;
 const destinationList = document.getElementById('destinationList');
 const sendButton = document.getElementById('hero-button');
 
@@ -37,7 +35,7 @@ const renderDestinations = async () => {
             destinationList.appendChild(element);
         });
 
-     if (user) {
+     if (tokenUser) {
         const deleteButtons = document.querySelectorAll('.delete-destination');
         deleteButtons.forEach((button) => {
             button.addEventListener('click', async (event) => {
@@ -105,5 +103,8 @@ const renderDestinations = async () => {
 
 renderDestinations();
 
-
+function userAuthValidation() {
+    const token = localStorage.getItem("token");
+    return token;
+  }
 
