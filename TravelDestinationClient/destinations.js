@@ -9,7 +9,6 @@ const createDestinationElement = (destination) => {
 
     card.querySelector('.image').src = destination.image;
     card.querySelector('.destination-country').textContent = destination.country;
-    console.log("what is this in the end??",  destination.link)
     card.querySelector('.link').href = `http://${destination.link}`;
     card.querySelector('.link').target = '_blank';
     card.querySelector('.destination-title').textContent = destination.title;
@@ -27,7 +26,6 @@ const renderDestinations = async () => {
     try {
         const response = await fetch('http://localhost:3000/destinations');
         const destinations = await response.json();
-        console.log("destinations", destinations);
 
 
         const destinationElements = destinations.map(createDestinationElement);
@@ -40,7 +38,6 @@ const renderDestinations = async () => {
         deleteButtons.forEach((button) => {
             button.addEventListener('click', async (event) => {
                 const id = event.target.dataset._id;
-                console.log("this is the id", id)
                 try {
                     const token = localStorage.getItem("token")
                     const response = await fetch(`http://localhost:3000/destinations/${id}`, {
