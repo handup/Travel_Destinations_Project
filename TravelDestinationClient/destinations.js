@@ -78,7 +78,6 @@ const renderDestinations = async () =>  {
                 }
             })
 
-            console.log("what is the data here?", selectedDestination )
             localStorage.setItem('selectedDestination', JSON.stringify(selectedDestination));
             window.location.href = `createDestinationPage.html?update=true&id=${selectedDestination[0]._id}`;
 

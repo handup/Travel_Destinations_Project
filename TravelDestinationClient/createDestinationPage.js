@@ -135,8 +135,6 @@ const destination = {
 
 
 if (urlParams.get('update') === "false") {
-  
-  console.log("this is the destination object",destination, isUpdate)
 
   const response = await fetch("http://localhost:3000/destinations", {
     method: "POST",
@@ -151,8 +149,6 @@ if (urlParams.get('update') === "false") {
   window.location.replace("./index.html");
 } else {
 
-  console.log("this is the destination object",destination, isUpdate)
-
   try {
     const response = await fetch(`http://localhost:3000/destinations/${destinationId}`, {
     method: 'PUT',
@@ -161,7 +157,6 @@ if (urlParams.get('update') === "false") {
     },
     body: JSON.stringify(destination)
     });
-
           
     const result = await response.text();
     console.log(result);
@@ -174,8 +169,6 @@ if (urlParams.get('update') === "false") {
     }
 }
 
-
-  
 });
 
 //Cancel button taking back to home
