@@ -4,23 +4,34 @@ const urlParams = new URLSearchParams(window.location.search);
 const isUpdate = urlParams.get('update');
 const destinationId = urlParams.get('id');
 
-const base64ToImage = (base64) => {
-  var image = new Image();
-  image.src = base64;
-  return image;
-}
+(async () => {
 
-const imageToCanvas = (image) => {
-  const canvas = document.createElement('canvas');
-  canvas.width = image.width;
-  canvas.height = image.height;
-  const context = canvas.getContext('2d');
-  context.drawImage(image, 0, 0);
-  return canvas;
+const base64ToImage = (base64) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      resolve(image);
+    };
+    image.onerror = reject;
+    image.src = base64;
+  });
 };
 
-const canvasToBase64 = (canvas) => {
-  return canvas.toDataURL();
+const imageToCanvas = (image) => {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    resolve(canvas);
+  });
+};
+
+const canvasToBase64 = (canvas)  => {
+  return new Promise((resolve, reject) => {
+    resolve(canvas.toDataURL());
+  });
 };
 
 
@@ -48,41 +59,34 @@ if (selectedDestination) {
   styleSheet.insertRule("input[type='file'] { color: transparent; background-color: white; }", styleSheet.cssRules.length);
 
   imageInput.src = originalBase64File;
-  const fileName = document.createTextNode(selectedDestination[0].imageName);
+  const fileName = document.createTextNode(`Existing file: ${selectedDestination[0].imageName}`);
   imageInput.parentNode.insertBefore(fileName, imageInput.nextSibling);
  
-  const imageElement = base64ToImage(originalBase64File);
-  const canvasElement = imageToCanvas(imageElement);
-  const base64Data = canvasToBase64(canvasElement);
- 
+  const imageElement = await base64ToImage(originalBase64File);
+  const canvasElement = await imageToCanvas(imageElement);
+  const base64Data = await canvasToBase64(canvasElement);
+
   previewImage.src = base64Data;
 
   imageInput.addEventListener('change', async (event) => {
     const file = event.target.files[0];
-
     const base64Data = await imageToBase64(file);
 
-    const previewDiv = document.createElement('div');
-    previewDiv.classList.add('preview');
-
     previewImage.src = base64Data;
-    previewDiv.appendChild(previewImage);
     
-    const fileName = document.createTextNode(file.name);
+    const fileName = document.createTextNode(`Added file: ${file.name}`);
     imageInput.nextSibling.remove();
     imageInput.parentNode.insertBefore(fileName, imageInput.nextSibling);
-    previewDiv.appendChild(imageInput);
-    
   });
 
   localStorage.removeItem('selectedDestination');
 
 } else {
-  
+
   let previewImage = document.getElementById('preview');
   previewImage.style.display = 'none';
-  
 }
+})();
 
 const imageToBase64 = (file) =>
 new Promise((resolve, reject) => {
@@ -117,7 +121,6 @@ const description = document.getElementById("description").value;
 const arrivalDate = document.getElementById("arrivalDate").value;
 const departureDate = document.getElementById("departureDate").value;
 const image = await imageToBase64(document.getElementById("image").files[0]); // Assuming a single image file
-// console.log("This is the imgae again", document.getElementById("image").files[0] )
 const imageName = document.getElementById("image").files[0] !== undefined ? document.getElementById("image").files[0].name : selectedDestination[0].imageName;
 
 // Create a destination object
@@ -144,8 +147,6 @@ if (urlParams.get('update') === "false") {
     body: JSON.stringify(destination),
   });
 
-  console.log("Server response:", response);
-
   window.location.replace("./index.html");
 } else {
 
@@ -159,7 +160,6 @@ if (urlParams.get('update') === "false") {
     });
           
     const result = await response.text();
-    console.log(result);
       if(result.includes("updated")){
       window.location.replace("./index.html");
       }

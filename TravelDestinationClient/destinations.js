@@ -29,9 +29,7 @@ const renderDestinations = async () =>  {
     try {
       const response = await fetch('http://localhost:3000/destinations');
       const destinations = await response.json();
-      console.log("destinations", destinations);
 
-  
       const destinationElements = destinations.map(createDestinationElement);
       destinationElements.forEach((element) => {
         destinationList.appendChild(element);
@@ -43,7 +41,6 @@ const renderDestinations = async () =>  {
         deleteButtons.forEach((button) => {
         button.addEventListener('click', async (event) => {
             const id = event.target.dataset._id;
-            console.log("this is the id", id)
             try {
             const response = await fetch(`http://localhost:3000/destinations/${id}`, {
                 method: 'DELETE',
@@ -79,7 +76,13 @@ const renderDestinations = async () =>  {
             })
 
             localStorage.setItem('selectedDestination', JSON.stringify(selectedDestination));
-            window.location.href = `createDestinationPage.html?update=true&id=${selectedDestination[0]._id}`;
+            localStorage.setItem('updated', 'true');
+            
+            if (localStorage.getItem('updated') === 'true') { // Check if localStorage has been updated
+                window.location.href = `createDestinationPage.html?update=true&id=${selectedDestination[0]._id}`;
+              } else {
+                console.log('localStorage has not been updated');
+              }
 
         });
         });
