@@ -25,6 +25,7 @@ const destinationSchema = new db.Schema({
     required: true
   },
   image: String,
+  imageName: String,
 });
 
 
