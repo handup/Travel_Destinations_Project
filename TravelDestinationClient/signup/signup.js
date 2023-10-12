@@ -7,7 +7,7 @@ export async function createSignup(data) {
     console.log(response);
 
     //We are redirectiong to index page
-    //window.location.href = "../index.html";
+    window.location.href = "../login/login.html";
   } catch (error) {
     console.log("error happened: ", error);
   }

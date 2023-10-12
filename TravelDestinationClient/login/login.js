@@ -22,7 +22,7 @@ export async function loginUser(data) {
     console.log(localStorage.getItem("token"));
 
     //We are redirectiong to index page
-    //window.location.href = "../index.html";
+    window.location.href = "../index.html";
   } catch (error) {
     console.log("error happened: ", error);
   }
